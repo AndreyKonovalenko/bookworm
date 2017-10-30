@@ -1,13 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Form, Button, Message } from 'semantic-ui-react'
 import Validator from 'validator'
 import InlineError from '../messages/InlineError'
-import PropTypes from 'prop-types'
+
 
 class LoginForm extends React.Component {
 
     state = {
-        data: {},
+        data: {
+            email: '',
+            password: ''
+        },
         loading: false,
         errors: {}
     }
@@ -35,12 +39,15 @@ class LoginForm extends React.Component {
 
     render () {
         const { data, errors, loading } = this.state
+
         return (
             <Form onSubmit={this.onSubmit} loading={loading}>
-                {errors.global && <Message negative>
-                    <Message.Header>Something went wrong</Message.Header>
-                    <p>{errors.global}</p>
-                </Message>}
+                {errors.global &&
+                    <Message negative>
+                        <Message.Header>Something went wrong</Message.Header>
+                        <p>{errors.global}</p>
+                    </Message>
+                }
                 <Form.Field error={!!errors.email}>
                     <label htmlFor="email">Email</label>
                     <input
@@ -65,7 +72,7 @@ class LoginForm extends React.Component {
                 </Form.Field>
                 <Button primary>Login</Button>
             </Form>
-        );
+        )
     }
 }
 
