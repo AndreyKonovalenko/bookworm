@@ -5,8 +5,7 @@ import Validator from 'validator'
 import InlineError from '../messages/InlineError'
 
 
-class LoginForm extends React.Component {
-
+class SingupForm extends React.Component {
     state = {
         data: {
             email: '',
@@ -19,23 +18,19 @@ class LoginForm extends React.Component {
         this.setState({
             data: { ...this.state.data, [e.target.name]: e.target.value }
         })
-
     onSubmit = () => {
-        const errors = this.validate(this.state.data);
-        this.setState({ errors });
+        const errors = this.validate(this.state.data)
+        this.setState({ errors })
         if (Object.keys(errors).length === 0) {
             this.setState({ loading: true })
             this.props
                 .submit(this.state.data)
-                .catch(err =>
-                    this.setState({ errors: err.response.data.errors, loading: false })
-                )
+                .catch(err => this.setState( {errors: err.res.data.errors, loading: false }))
         }
     }
-
     validate = (data) => {
         const errors = {}
-        if(!Validator.isEmail(data.email)) errors.email = "Invalid email"
+        if (!Validator.isEmail(data.email)) errors.email = "Invalid email"
         if (!data.password) errors.password = "Can't be blank"
         return errors
     }
@@ -67,7 +62,7 @@ class LoginForm extends React.Component {
                     <input
                         type="password"
                         name="password"
-                        placeholder="Make in secure"
+                        placeholder=" "
                         value={data.password}
                         onChange={this.onChange}
                     />
@@ -79,8 +74,8 @@ class LoginForm extends React.Component {
     }
 }
 
-LoginForm.propTypes = {
+SingupForm.propTypes = {
     submit: PropTypes.func.isRequired
 }
 
-export default LoginForm
+export default SingupForm
